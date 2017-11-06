@@ -1,8 +1,8 @@
-module.exports = (function (express, datastore, Validators, CONFIG) {
+module.exports = (function (express, datastore, Validators, logger, CONFIG) {
     const ItemsModule = require('./items/items.module');
     const RouterFactory = require('./apis.router');
 
-    const items = ItemsModule(express, datastore, Validators, CONFIG);
+    const items = ItemsModule(express, datastore, Validators, logger, CONFIG);
 
     const router = RouterFactory(express, items);
 

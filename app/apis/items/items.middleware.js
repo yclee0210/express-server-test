@@ -1,23 +1,24 @@
-module.exports = (function (Item) {
+module.exports = (function (datastore, logger, Item) {
 
     const list = (req, res) => {
 
         Item.list()
             .then((entities) => res.status(200).json({
-                list: entities[0]
+                list: entities
             }))
             .catch((error) => {
+                logger.error(error);
+                res.status(error.error.status).json({message: error.error.message});
             });
     };
 
-    const get = (req, res, next) => {
+    const get = (req, res) => {
 
         Item.get(req.params.id)
-            .then(() => {
-                res.locals.user = user;
-                next();
-            })
+            .then((entity) => res.status(200).json(entity))
             .catch((error) => {
+                logger.error(error);
+                res.status(error.error.status).json({message: error.error.message});
             });
     };
 
@@ -27,11 +28,13 @@ module.exports = (function (Item) {
 
             item.save()
                 .then(() => res.status(201).send())
-                .catch((error) => res.status(500).send())
+                .catch((error) => {
+                    logger.error(error);
+                    res.status(500).send()
+                });
         } catch (error) {
-            res.status(400).json({
-                error: error
-            });
+            logger.error(error);
+            res.status(400).json({message: error.message});
         }
     };
 
