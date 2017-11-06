@@ -10,6 +10,8 @@ loadDb = (id) => {
             console.log('Datastore Connection Failed: ' + error);
             process.exit(1);
         });
+
+    return datastore;
 };
 
 module.exports = loadDb;
