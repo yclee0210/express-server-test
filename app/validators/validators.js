@@ -8,7 +8,11 @@ class Validators {
             {result: true}
         );
 
-        return result.result ? input : new Error(result.exception);
+        if (result.result) {
+            return input;
+        } else {
+            throw new Error(result.exception);
+        }
     }
 
     static email(input) {

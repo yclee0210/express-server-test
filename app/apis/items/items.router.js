@@ -2,7 +2,6 @@ module.exports = (function (express, items) {
     const router = express.Router();
 
     router.use((req, res, next) => {
-        console.log(`In Items router at ${new Date().toJSON()}`);
         next();
     });
 
