@@ -1,15 +1,12 @@
 module.exports = (function (datastore, logger, Item) {
 
-    const list = (req, res) => {
+    const list = (req, res, next) => {
 
         Item.list()
             .then((entities) => res.status(200).json({
                 list: entities
             }))
-            .catch((error) => {
-                logger.error(error);
-                res.status(error.error.status).json({message: error.error.message});
-            });
+            .catch((error) => next(error));
     };
 
     const get = (req, res) => {
